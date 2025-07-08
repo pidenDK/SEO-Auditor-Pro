@@ -148,3 +148,119 @@ function initPopup() {
 }
 
 document.addEventListener('DOMContentLoaded', initPopup);
+function getCurrentTabUrl() {
+  return chrome.tabs
+    .query({ active: true, currentWindow: true })
+    .then(tabs => (tabs[0] ? tabs[0].url : ''));
+}
+
+const tabHandlers = {
+  technical: async () => {
+    const url = await getCurrentTabUrl();
+    const loading = document.getElementById('technical-loading');
+    const list = document.getElementById('technical-list');
+    loading.classList.remove('hidden');
+    chrome.runtime.sendMessage(
+      { action: 'analyzeOnPage', value: { url } },
+      res => {
+        loading.classList.add('hidden');
+        if (res && res.success) {
+          list.textContent = JSON.stringify(res.payload, null, 2);
+          list.classList.remove('hidden');
+        }
+      }
+    );
+  },
+  performance: async () => {
+    const url = await getCurrentTabUrl();
+    const loading = document.getElementById('performance-loading');
+    const list = document.getElementById('performance-list');
+    loading.classList.remove('hidden');
+    chrome.runtime.sendMessage(
+      { action: 'getPerformanceMetrics', value: { url } },
+      res => {
+        loading.classList.add('hidden');
+        if (res && res.success) {
+          list.textContent = JSON.stringify(res.payload, null, 2);
+          list.classList.remove('hidden');
+        }
+      }
+    );
+  },
+  keywords: () => {
+    document.getElementById('keywords-controls').classList.remove('hidden');
+  },
+  backlinks: async () => {
+    const url = await getCurrentTabUrl();
+    const domain = url ? new URL(url).hostname : '';
+    const loading = document.getElementById('backlinks-loading');
+    const list = document.getElementById('backlinks-list');
+    loading.classList.remove('hidden');
+    chrome.runtime.sendMessage(
+      { action: 'getBacklinks', value: { domain } },
+      res => {
+        loading.classList.add('hidden');
+        if (res && res.success) {
+          list.textContent = JSON.stringify(res.payload, null, 2);
+          list.classList.remove('hidden');
+        }
+      }
+    );
+  }
+};
+
+function activateTab(name) {
+  document.querySelectorAll('.tab-panel').forEach(el => {
+    el.hidden = el.id !== name;
+    if (el.id === name) {
+      el.classList.add('active');
+    } else {
+      el.classList.remove('active');
+    }
+  });
+  document.querySelectorAll('.tab-button').forEach(btn => {
+    const active = btn.dataset.tab === name;
+    btn.classList.toggle('active', active);
+    btn.setAttribute('aria-selected', active);
+  });
+  if (tabHandlers[name]) {
+    tabHandlers[name]();
+  }
+}
+
+function initSeoAnalyzer() {
+  document.querySelectorAll('.tab-button').forEach(btn => {
+    btn.addEventListener('click', () => activateTab(btn.dataset.tab));
+  });
+  const active = document.querySelector('.tab-button.active');
+  if (active) {
+    activateTab(active.dataset.tab);
+  }
+
+  const searchBtn = document.getElementById('keyword-search');
+  if (searchBtn) {
+    searchBtn.addEventListener('click', () => {
+      const input = document.getElementById('keyword-input');
+      const kw = input.value.trim();
+      if (!kw) return;
+      const loading = document.getElementById('keywords-loading');
+      const list = document.getElementById('keywords-list');
+      loading.classList.remove('hidden');
+      chrome.runtime.sendMessage(
+        { action: 'fetchKeywords', value: { keyword: kw } },
+        res => {
+          loading.classList.add('hidden');
+          if (res && res.success) {
+            list.textContent = JSON.stringify(res.payload, null, 2);
+            list.classList.remove('hidden');
+          }
+        }
+      );
+    });
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initPopup();
+  initSeoAnalyzer();
+});

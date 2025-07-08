@@ -1,3 +1,5 @@
+importScripts('src/dataforseo/api.js');
+
 function initServiceWorker() {
   logInfo('Service worker initializing');
   chrome.runtime.onMessage.addListener(handleRuntimeMessage);
@@ -44,6 +46,27 @@ function handleRuntimeMessage(request, sender, sendResponse) {
           await new Promise(resolve => chrome.storage.sync.clear(resolve));
           logInfo('Storage cleared');
           result = { success: true };
+          break;
+          case 'analyzeOnPage':
+          if (!value || !value.url) {
+            throw new Error('Missing URL for on-page analysis');
+          }
+          result = await dfsApi.analyzeOnPage(value.url);
+          break;
+        case 'getPerformanceMetrics':
+          if (!value || !value.url) {
+            throw new Error('Missing URL for performance metrics');
+          }
+          result = await dfsApi.getPerformanceMetrics(value.url);
+          break;
+        case 'fetchKeywords':
+          result = await dfsApi.fetchKeywords(value);
+          break;
+        case 'getBacklinks':
+          if (!value || !value.domain) {
+            throw new Error('Missing domain for backlink lookup');
+          }
+          result = await dfsApi.getBacklinks(value.domain);
           break;
         default:
           throw new Error(`Unknown action: ${action}`);

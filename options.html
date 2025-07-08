@@ -1,0 +1,87 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SEO Technical Analyzer ? Options</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; color: #333; }
+    h1 { font-size: 24px; margin-bottom: 10px; }
+    section { margin-bottom: 20px; padding: 15px; border: 1px solid #ccc; border-radius: 4px; }
+    label { display: block; margin-bottom: 8px; }
+    input[type="text"], input[type="password"], input[type="number"], textarea { width: 100%; padding: 8px; margin-top: 4px; box-sizing: border-box; }
+    input[type="checkbox"] { margin-right: 6px; }
+    button { padding: 8px 16px; margin-right: 10px; }
+    .status { margin-top: 10px; font-size: 14px; }
+    .status.success { color: #0a0; }
+    .status.error { color: #a00; }
+    .buttons { margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <h1>Extension Options</h1>
+  <form id="optionsForm">
+    <section>
+      <h2>DataForSEO API</h2>
+      <label>
+        API Key
+        <input type="text" id="dfsApiKey" name="dfsApiKey" autocomplete="off">
+      </label>
+      <label>
+        API Secret
+        <input type="password" id="dfsApiSecret" name="dfsApiSecret" autocomplete="new-password">
+      </label>
+      <div class="buttons">
+        <button type="button" id="testDfs">Test Connection</button>
+        <span id="dfsStatus" class="status"></span>
+      </div>
+    </section>
+    <section>
+      <h2>OpenRouter API</h2>
+      <label>
+        API Key
+        <input type="text" id="orApiKey" name="orApiKey" autocomplete="off">
+      </label>
+      <div class="buttons">
+        <button type="button" id="testOr">Test Connection</button>
+        <span id="orStatus" class="status"></span>
+      </div>
+    </section>
+    <section>
+      <h2>Script Injection</h2>
+      <label>
+        <input type="checkbox" id="injectionEnabled" name="injectionEnabled">
+        Enable Script Injection
+      </label>
+      <label>
+        Injection Delay (ms)
+        <input type="number" id="injectionDelay" name="injectionDelay" min="0">
+      </label>
+      <label>
+        Custom Scripts (one per line)
+        <textarea id="customScripts" name="customScripts" rows="5"></textarea>
+      </label>
+    </section>
+    <section>
+      <h2>Features</h2>
+      <label><input type="checkbox" id="featOnPage" name="featOnPage"> Enable On-Page Analysis</label>
+      <label><input type="checkbox" id="featPerformance" name="featPerformance"> Enable Performance Analysis</label>
+      <label><input type="checkbox" id="featKeywords" name="featKeywords"> Enable Keywords Analysis</label>
+      <label><input type="checkbox" id="featBacklinks" name="featBacklinks"> Enable Backlinks Analysis</label>
+      <label><input type="checkbox" id="featAi" name="featAi"> Enable AI Solutions</label>
+    </section>
+    <section>
+      <h2>Cache Settings</h2>
+      <label>
+        Cache TTL (minutes)
+        <input type="number" id="cacheTtl" name="cacheTtl" min="0">
+      </label>
+    </section>
+    <div class="buttons">
+      <button type="submit" id="saveBtn">Save</button>
+      <button type="button" id="resetBtn">Reset to Defaults</button>
+      <span id="saveStatus" class="status"></span>
+    </div>
+  </form>
+  <script src="options.js"></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SEO Analyzer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js" integrity="sha384-JngrEQzkVpoYQCXyGP/5RXmKYyrFq9siPHBaP4tc564n5SbjnGpHyX38adB7eNff" crossorigin="anonymous" defer></script>
+  <script src="popup.js" defer></script>
+</head>
+<body>
+  <div class="popup-container">
+    <header class="popup-header">
+      <h1>SEO Analyzer</h1>
+    </header>
+    <nav class="tab-nav" role="tablist">
+      <button type="button" data-tab="overview" id="tab-overview" role="tab" aria-selected="true" aria-controls="overview" class="tab-button active">Overview</button>
+      <button type="button" data-tab="technical" id="tab-technical" role="tab" aria-selected="false" aria-controls="technical" class="tab-button">Technical</button>
+      <button type="button" data-tab="performance" id="tab-performance" role="tab" aria-selected="false" aria-controls="performance" class="tab-button">Performance</button>
+      <button type="button" data-tab="keywords" id="tab-keywords" role="tab" aria-selected="false" aria-controls="keywords" class="tab-button">Keywords</button>
+      <button type="button" data-tab="backlinks" id="tab-backlinks" role="tab" aria-selected="false" aria-controls="backlinks" class="tab-button">Backlinks</button>
+      <button type="button" data-tab="ai" id="tab-ai" role="tab" aria-selected="false" aria-controls="ai" class="tab-button">AI Solutions</button>
+      <button type="button" data-tab="settings" id="tab-settings" role="tab" aria-selected="false" aria-controls="settings" class="tab-button">Settings</button>
+    </nav>
+    <section id="overview" class="tab-panel active" role="tabpanel" aria-labelledby="tab-overview">
+      <div class="loading" id="overview-loading">Loading overview...</div>
+      <canvas id="overview-chart" class="chart hidden"></canvas>
+      <div id="overview-summary" class="summary hidden"></div>
+    </section>
+    <section id="technical" class="tab-panel" role="tabpanel" aria-labelledby="tab-technical" hidden>
+      <div class="loading" id="technical-loading">Analyzing technical SEO...</div>
+      <ul id="technical-list" class="result-list hidden"></ul>
+    </section>
+    <section id="performance" class="tab-panel" role="tabpanel" aria-labelledby="tab-performance" hidden>
+      <div class="loading" id="performance-loading">Measuring performance...</div>
+      <canvas id="performance-chart" class="chart hidden"></canvas>
+      <ul id="performance-list" class="result-list hidden"></ul>
+    </section>
+    <section id="keywords" class="tab-panel" role="tabpanel" aria-labelledby="tab-keywords" hidden>
+      <div class="loading" id="keywords-loading">Fetching keyword data...</div>
+      <div id="keywords-controls" class="hidden">
+        <input type="text" id="keyword-input" placeholder="Enter keywords">
+        <button type="button" id="keyword-search">Search</button>
+      </div>
+      <ul id="keywords-list" class="result-list hidden"></ul>
+    </section>
+    <section id="backlinks" class="tab-panel" role="tabpanel" aria-labelledby="tab-backlinks" hidden>
+      <div class="loading" id="backlinks-loading">Loading backlink profile...</div>
+      <ul id="backlinks-list" class="result-list hidden"></ul>
+    </section>
+    <section id="ai" class="tab-panel" role="tabpanel" aria-labelledby="tab-ai" hidden>
+      <div class="loading" id="ai-loading">Ready for AI solutions...</div>
+      <ul id="ai-list" class="result-list hidden"></ul>
+    </section>
+    <section id="settings" class="tab-panel" role="tabpanel" aria-labelledby="tab-settings" hidden>
+      <form id="settings-form">
+        <div class="form-group">
+          <label for="api-key-dataforseo">DataForSEO API Key</label>
+          <input type="password" id="api-key-dataforseo" name="apiKeyDataforseo" required>
+        </div>
+        <div class="form-group">
+          <label for="api-key-openrouter">OpenRouter API Key</label>
+          <input type="password" id="api-key-openrouter" name="apiKeyOpenrouter" required>
+        </div>
+        <div class="form-group">
+          <label for="cache-ttl">Cache TTL (minutes)</label>
+          <input type="number" id="cache-ttl" name="cacheTTL" min="1" max="1440" required>
+        </div>
+        <button type="submit" id="settings-save">Save Settings</button>
+        <div id="settings-status" class="status-message"></div>
+      </form>
+    </section>
+  </div>
+</body>
+</html>

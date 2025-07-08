@@ -1,0 +1,29 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>New Script Project</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="popup">
+    <header class="popup__header">
+      <h1 class="popup__title">User Scripts</h1>
+      <button id="options-button" class="popup__options-button" type="button" aria-label="Open Options" title="Open Options">
+        <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 8a4 4 0 100 8 4 4 0 000-8zm8.94 2a1 1 0 01.06.33v2.34a1 1 0 01-.06.33l-1.91 3.31a1 1 0 01-1.09.45l-2.49-.6a7.98 7.98 0 01-1.8 1.05l-.38 2.6a1 1 0 01-.99.85H9.65a1 1 0 01-.99-.85l-.38-2.6a7.98 7.98 0 01-1.8-1.05l-2.49.6a1 1 0 01-1.09-.45L2.06 12.99a1 1 0 01-.06-.33V10.32a1 1 0 01.06-.33l1.91-3.31a1 1 0 011.09-.45l2.49.6a7.98 7.98 0 011.8-1.05l.38-2.6A1 1 0 009.65 2h4.7a1 1 0 01.99.85l.38 2.6a7.98 7.98 0 011.8 1.05l2.49-.6a1 1 0 011.09.45l1.91 3.31z"/>
+        </svg>
+      </button>
+    </header>
+    <main class="popup__main">
+      <ul id="script-list" class="script-list" role="list"></ul>
+      <div class="popup__empty-state" id="empty-state" aria-live="polite">No scripts configured.</div>
+    </main>
+    <footer class="popup__footer">
+      <button id="add-script-button" class="popup__add-button" type="button">Add New Script</button>
+    </footer>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
